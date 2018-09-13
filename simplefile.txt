@@ -1,2 +1,4 @@
-A simple file
+Title: A simple file
+Body: This is a simple file.
+
 
