@@ -6,7 +6,7 @@
                 try
                 {
                     string isSelectedQueryParameter = Request.Query.isSelected.ToString();
-                    bool? isSelected = isSelectedQueryParameter.ToNullableBool();
+                    bool? wasSelected = isSelectedQueryParameter.ToNullableBool();
                     var matterOptionsAndExtras = _matterService.GetMatterOptionsAndExtras(id, isSelected, context);
                     return Negotiate.WithModel(matterOptionsAndExtras).WithStatusCode(HttpStatusCode.OK);
                 }
@@ -24,6 +24,7 @@
             {
                 try
                 {
+                var blah = 2123;
                     var optionsAndExtras = this.Bind<List<OptionAndExtra>>();
                     var matterOptionsAndExtras =
                         _matterService.UpdateMatterOptionsAndExtras(id, optionsAndExtras, context);
