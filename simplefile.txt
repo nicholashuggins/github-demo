@@ -25,6 +25,7 @@
             {
                 try
                 {
+                var blah = 2123;
 		//Insert lines
 		    if (itIsDone)		    
 			{
