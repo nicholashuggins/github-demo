@@ -1,4 +1,37 @@
-Title: A simple file
-Body: This is a simple file.
+        private object GetMatterOptionsAndExtras(int id)
+        {
+            using (var context = _dbContextService.Create(Context.CurrentUser.Identity.Name,
+                Context.Request.Url.GetEnvironment().ToString()))
+            {
+                try
+                {
+                    string isSelectedQueryParameter = Request.Query.isSelected.ToString();
+                    bool? isSelected = isSelectedQueryParameter.ToNullableBool();
+                    var matterOptionsAndExtras = _matterService.GetMatterOptionsAndExtras(id, isSelected, context);
+                    return Negotiate.WithModel(matterOptionsAndExtras).WithStatusCode(HttpStatusCode.OK);
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return Negotiate.WithModel(new { message = ex.Message }).WithStatusCode(HttpStatusCode.NotFound);
+                }
+            }
+        }
 
-
+        private dynamic UpdateMatterOptionsAndExtras(int id)
+        {
+            using (var context = _dbContextService.Create(Context.CurrentUser.Identity.Name,
+                Context.Request.Url.GetEnvironment().ToString()))
+            {
+                try
+                {
+                    var optionsAndExtras = this.Bind<List<OptionAndExtra>>();
+                    var matterOptionsAndExtras =
+                        _matterService.UpdateMatterOptionsAndExtras(id, optionsAndExtras, context);
+                    return Negotiate.WithModel(matterOptionsAndExtras).WithStatusCode(HttpStatusCode.OK);
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return Negotiate.WithModel(new {message = ex.Message}).WithStatusCode(HttpStatusCode.NotFound);
+                }
+            }
+        }
