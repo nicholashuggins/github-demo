@@ -9,7 +9,7 @@
                     var willBeSelectedQueryParameter = Request.Query.isSelected.ToString();
                     bool? isSelected = willBeSelectedQueryParameter.ToNullableBool();
                     var matterOptionsAndExtras = _matterService.GetMatterOptionsAndExtras(id, isSelected, context);
-                    return null;
+                    return Negotiate.WithModel(matterOptionsAndExtras).WithStatusCode(HttpStatusCode.OK);
                 }
                 catch (KeyNotFoundException ex)
                 {
